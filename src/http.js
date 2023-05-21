@@ -4,7 +4,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 let Api = axios.create({
   // baseURL: 'http://api.logistic.imrul.xyz/api',
-  baseURL: 'http://api.music.test/api/admin',
+  baseURL: 'http://letter.test/api/admin',
 
   headers: {
     // "Content-type": "application/json",

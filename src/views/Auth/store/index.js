@@ -21,10 +21,11 @@ export const AuthSlice = createSlice({
     builder
       .addCase(Signin.fulfilled, (state, action) => {
         if(action?.payload?.status) {
-          localStorage.setItem('userData', JSON.stringify(action.payload?.data?.userData))
-          localStorage.setItem('accessToken', JSON.stringify(action.payload?.data?.accessToken))
+          console.log("🚀 ~ file: index.js:24 ~ .addCase ~ action?.payload:", action?.payload)
+          localStorage.setItem('userData', JSON.stringify(action.payload?.data?.data))
+          localStorage.setItem('accessToken', JSON.stringify(action.payload?.data?.data?.token))
           state.UserData = action.payload?.user
-          state.accessToken = action.payload?.accessToken
+          state.accessToken = action.payload?.token
         }
       })
     }

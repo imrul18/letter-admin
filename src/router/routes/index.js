@@ -6,6 +6,7 @@ import BlankLayout from "@layouts/BlankLayout";
 import LayoutWrapper from "@src/@core/layouts/components/layout-wrapper";
 import HorizontalLayout from "@src/layouts/HorizontalLayout";
 import VerticalLayout from "@src/layouts/VerticalLayout";
+import PostOfficeRoute from "@src/views/PostOffice/Route";
 
 // ** Route Components
 import PublicRoute from "@components/routes/PublicRoute";
@@ -36,6 +37,8 @@ const Error = lazy(() => import("../../views/Error"));
 
 // ** Merge Routes
 const Routes = [  
+
+  ...PostOfficeRoute,
   {
     path: "/",
     index: true,

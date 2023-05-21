@@ -18,6 +18,7 @@ import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 import illustrationsLight from "@src/assets/images/pages/login-v2.svg";
 
 // ** Styles
+import themeConfig from "@src/configs/themeConfig";
 import "@styles/react/pages/page-authentication.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -118,7 +119,7 @@ const Login = () => {
               </g>
             </g>
           </svg>
-          <h2 className="brand-text text-primary ms-1">Vuexy</h2>
+          <h2 className="brand-text text-primary ms-1">{themeConfig?.app?.appName}</h2>
         </Link>
         <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
           <div className="w-100 d-lg-flex align-items-center justify-content-center px-5">
@@ -132,25 +133,25 @@ const Login = () => {
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h2" className="fw-bold mb-1">
-              Welcome to Vuexy! 👋
+              Welcome to Logistic!
             </CardTitle>
             <CardText className="mb-2">
               Please sign-in to your account and start the adventure
             </CardText>
             <Form className="auth-login-form mt-2">
               <div className="mb-1">
-                <Label className="form-label" for="username">
-                  Email
+                <Label className="form-label" for="phone">
+                  Phone number
                 </Label>
                 <Input
                   type="text"
-                  id="username"
-                  name="username"
-                  placeholder="imrul@example.com"
+                  id="phone"
+                  name="phone"
+                  placeholder="016XXXXXXXX"
                   autoFocus
                   onChange={onChange}
                 />
-                    <small className="text-danger">{errors?.username}</small>
+                    <small className="text-danger">{errors?.phone}</small>
 
               </div>
               <div className="mb-1">

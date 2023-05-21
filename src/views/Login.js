@@ -3,26 +3,26 @@ import { useSkin } from "@hooks/useSkin";
 import { Link } from "react-router-dom";
 
 // ** Icons Imports
-import { Facebook, Twitter, Mail, GitHub } from "react-feather";
+import { Facebook, GitHub, Mail, Twitter } from "react-feather";
 
 // ** Custom Components
 import InputPasswordToggle from "@components/input-password-toggle";
 
 // ** Reactstrap Imports
 import {
-  Row,
-  Col,
-  CardTitle,
-  CardText,
-  Form,
-  Label,
-  Input,
   Button,
+  CardText,
+  CardTitle,
+  Col,
+  Form,
+  Input,
+  Label,
+  Row,
 } from "reactstrap";
 
 // ** Illustrations Imports
-import illustrationsLight from "@src/assets/images/pages/login-v2.svg";
 import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
+import illustrationsLight from "@src/assets/images/pages/login-v2.svg";
 
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
@@ -122,7 +122,7 @@ const Login = () => {
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h2" className="fw-bold mb-1">
-              Welcome to Vuexy! 👋
+              Welcome to Vuexy! 👋aa
             </CardTitle>
             <CardText className="mb-2">
               Please sign-in to your account and start the adventure

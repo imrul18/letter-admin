@@ -1,13 +1,6 @@
-import { Circle, Home, Users } from "react-feather";
+import { Home, Users } from "react-feather";
 
-export default [
-  {
-    id: "dashboard",
-    title: "Dashboard",
-    icon: <Circle size={20} />,
-    isAccess: true,
-    navLink: "/dashboard",
-  },
+export default [  
   {
     id: "post_office",
     title: "Post Office",

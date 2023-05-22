@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 // ** Icons Imports
-import { Disc, X, Circle } from "react-feather";
+import { Circle, Disc, X } from "react-feather";
 
 // ** Config
 import themeConfig from "@configs/themeConfig";
 
 // ** Utils
-import { getUserData, getHomeRouteForLoggedInUser } from "@utils";
+import { getUserData } from "@utils";
 
 const VerticalMenuHeader = (props) => {
   // ** Props
@@ -57,7 +57,7 @@ const VerticalMenuHeader = (props) => {
       <ul className="nav navbar-nav flex-row">
         <li className="nav-item me-auto">
           <NavLink
-            to={user ? getHomeRouteForLoggedInUser(user.role) : "/"}
+            to="/"
             className="navbar-brand"
           >
             <span className="brand-logo">

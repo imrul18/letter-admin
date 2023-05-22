@@ -45,7 +45,7 @@ const Routes = [
   {
     path: "/",
     index: true,
-    element: <Navigate replace to={localStorage.getItem('accessToken') ? '/dashboard ' : DefaultRoute} />,
+    element: <Navigate replace to={localStorage.getItem('accessToken') ? '/post_office' : '/login'} />,
   },
   {
     path: "/dashboard",

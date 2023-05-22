@@ -3,20 +3,20 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api from "@src/http";
 
 export const getAllData = createAsyncThunk(
-  "postOffices/getAllData",
+  "users/getAllData",
   async (_, { getState }) => {
-    const data = getState()?.postOffices?.params;
-    const response = await Api.get("post-office", { params: data });
+    const data = getState()?.users?.params;
+    const response = await Api.get("user", { params: data });
     return response.data;
   }
 );
 
 export const addData = createAsyncThunk(
-  "postOffices/addData",
+  "users/addData",
   async (_, { getState, dispatch }) => {
     dispatch(setParamsData({ loading: true }));
-    const data = getState()?.postOffices?.uploadData;
-    const response = await Api.post("post-office", data);
+    const data = getState()?.users?.uploadData;
+    const response = await Api.post("user", data);
     if (response?.data?.status === 200 || response?.data?.status === 201) {
       return true;
     }
@@ -24,17 +24,17 @@ export const addData = createAsyncThunk(
   }
 );
 
-export const getData = createAsyncThunk("postOffices/getData", async (id) => {
+export const getData = createAsyncThunk("users/getData", async (id) => {
   const response = await Api.get(`post-office/${id}`);
   return response.data;
 });
 
 export const updateData = createAsyncThunk(
-  "postOffices/updateData",
+  "users/updateData",
   async (id, { getState, dispatch }) => {
     dispatch(setParamsData({ loading: true }));
-    const data = getState()?.postOffices?.uploadData;
-    const response = await Api.post(`post-office-update/${id}`, data);
+    const data = getState()?.users?.uploadData;
+    const response = await Api.post(`user-update/${id}`, data);
     if (response?.data?.status === 200 || response?.data?.status === 201) {
       return true;
     }
@@ -43,25 +43,33 @@ export const updateData = createAsyncThunk(
 );
 
 export const updateStatus = createAsyncThunk(
-  "postOffices/updateStatus",
+  "users/updateStatus",
   async (id, { dispatch }) => {
-    const response = await Api.post(`post-office-change-status/${id}`);
+    const response = await Api.post(`user-change-status/${id}`);
     dispatch(getAllData());
     return response.data;
   }
 );
 
 export const deleteData = createAsyncThunk(
-  "postOffices/deleteData",
+  "users/deleteData",
   async (id, { dispatch }) => {
-    const response = await Api.post(`post-office-delete/${id}`);
+    const response = await Api.post(`user-delete/${id}`);
     dispatch(getAllData());
     return response.data;
   }
 );
 
-export const postOfficesSlice = createSlice({
-  name: "postOffices",
+export const getPostOfficeOption = createAsyncThunk(
+  "users/getPostOfficeOption",
+  async () => {
+    const response = await Api.get(`option-post-office`);
+    return response.data;
+  }
+);
+
+export const usersSlice = createSlice({
+  name: "users",
   initialState: {
     data: [],
     params: {
@@ -74,6 +82,15 @@ export const postOfficesSlice = createSlice({
     },
 
     uploadData: {},
+    options:{
+      postOffice: [
+        { value: "1", label: "Post Office 1" },
+      ],
+      role: [
+        { value: "user", label: "User" },
+        { value: "delivery", label: "Post Man"}
+      ],
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -87,6 +104,9 @@ export const postOfficesSlice = createSlice({
       })
       .addCase(getData.fulfilled, (state, action) => {
         state.uploadData = action.payload;
+      })
+      .addCase(getPostOfficeOption.fulfilled, (state, action) => {
+        state.options = {...state.options, postOffice: action.payload}
       });
   },
   reducers: {
@@ -103,6 +123,6 @@ export const postOfficesSlice = createSlice({
 });
 
 export const { setParams, setParamsData, setUploadData } =
-  postOfficesSlice.actions;
+  usersSlice.actions;
 
-export default postOfficesSlice.reducer;
+export default usersSlice.reducer;

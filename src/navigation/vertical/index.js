@@ -1,4 +1,4 @@
-import { Circle, Home } from "react-feather";
+import { Circle, Home, Users } from "react-feather";
 
 export default [
   {
@@ -14,5 +14,12 @@ export default [
     icon: <Home size={20} />,
     isAccess: true,
     navLink: "/post_office",
+  },
+  {
+    id: "user",
+    title: "User",
+    icon: <Users size={20} />,
+    isAccess: true,
+    navLink: "/user",
   },
 ];

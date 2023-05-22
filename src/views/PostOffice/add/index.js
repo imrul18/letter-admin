@@ -12,13 +12,14 @@ import {
   Input,
   Label,
   Row,
+  Spinner,
 } from "reactstrap";
 import { addData, setUploadData } from "../store";
 
 const index = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { uploadData } = useSelector((state) => state.postOffices);
+  const { uploadData, paramsData } = useSelector((state) => state.postOffices);
 
   const onChange = (e) => {
     dispatch(
@@ -72,7 +73,7 @@ const index = () => {
                   </Col>
                   <Col sm="12">
                     <Label className="form-label" for="address">
-                      Code
+                      Address
                     </Label>
                     <Input
                       type="textarea"
@@ -95,8 +96,16 @@ const index = () => {
                           e.preventDefault();
                           onSubmit();
                         }}
+                        disabled={paramsData?.loading}
                       >
-                        Submit
+                        {paramsData?.loading ? (
+                          <>
+                          <Spinner className="me-25" size="sm" />
+                          Please Wait...
+                        </>
+                        ) : (
+                          "Submit"
+                        )}                        
                       </Button>
                     </div>
                   </Col>

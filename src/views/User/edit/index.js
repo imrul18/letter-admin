@@ -20,7 +20,7 @@ const index = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {id} = useParams();
-  const { uploadData, paramsData } = useSelector((state) => state.postOffices);
+  const { uploadData, paramsData } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getData(id));
@@ -35,7 +35,7 @@ const index = () => {
   const onSubmit = async () => {
     const res = await dispatch(updateData(id));
     if (res?.payload) {
-      navigate("/post_office");
+      navigate("/user");
     }
   };
 
@@ -78,7 +78,7 @@ const index = () => {
                   </Col>
                   <Col sm="12">
                     <Label className="form-label" for="address">
-                    Address
+                      Code
                     </Label>
                     <Input
                       type="textarea"

@@ -1,6 +1,8 @@
+import "@styles/react/libs/react-select/_react-select.scss";
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import Select from "react-select";
 import {
   Button,
   Card,
@@ -14,16 +16,17 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import { getData, setUploadData, updateData } from "../store";
+import { getData, getPostOfficeOption, setUploadData, updateData } from "../store";
 
 const index = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {id} = useParams();
-  const { uploadData, paramsData } = useSelector((state) => state.users);
+  const { id } = useParams();
+  const { uploadData, paramsData, options } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getData(id));
+    dispatch(getPostOfficeOption());
   }, []);
 
   const onChange = (e) => {
@@ -64,29 +67,58 @@ const index = () => {
                     />
                   </Col>
                   <Col sm="12">
-                    <Label className="form-label" for="code">
-                      Code
+                    <Label className="form-label" for="phone">
+                      Phone
                     </Label>
                     <Input
                       type="text"
-                      name="code"
-                      id="code"
-                      placeholder="Code"
-                      value={uploadData?.code}
+                      name="phone"
+                      id="phone"
+                      placeholder="Phone"
+                      value={uploadData?.phone}
                       onChange={onChange}
                     />
                   </Col>
                   <Col sm="12">
-                    <Label className="form-label" for="address">
-                      Code
+                    <Label className="form-label" for="po_id">
+                      Post Office
                     </Label>
-                    <Input
-                      type="textarea"
-                      name="address"
-                      id="address"
-                      placeholder="Address"
-                      value={uploadData?.address}
-                      onChange={onChange}
+                    <Select
+                      className="React"
+                      classNamePrefix="select"
+                      options={options?.postOffice}
+                      value={options?.postOffice?.find(
+                        (obj) => obj?.value == uploadData?.po_id
+                      )}
+                      onChange={(e) => {
+                        onChange({
+                          target: {
+                            name: "po_id",
+                            value: e?.value,
+                          },
+                        });
+                      }}
+                    />
+                  </Col>
+                  <Col sm="12">
+                    <Label className="form-label" for="type">
+                      Role
+                    </Label>
+                    <Select
+                      className="React"
+                      classNamePrefix="select"
+                      options={options?.role}
+                      value={options?.role?.find(
+                        (obj) => obj?.value === uploadData?.type
+                      )}
+                      onChange={(e) => {
+                        onChange({
+                          target: {
+                            name: "type",
+                            value: e?.value,
+                          },
+                        });
+                      }}
                     />
                   </Col>
                 </Row>
@@ -102,15 +134,15 @@ const index = () => {
                           onSubmit();
                         }}
                         disabled={paramsData?.loading}
-                        >
-                          {paramsData?.loading ? (
-                            <>
+                      >
+                        {paramsData?.loading ? (
+                          <>
                             <Spinner className="me-25" size="sm" />
                             Please Wait...
                           </>
-                          ) : (
-                            "Submit"
-                          )}    
+                        ) : (
+                          "Submit"
+                        )}
                       </Button>
                     </div>
                   </Col>

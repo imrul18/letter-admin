@@ -34,7 +34,7 @@ const renderAction = (row) => {
       </Link>
       <Link
         className="text-truncate text-capitalize align-middle"
-        to={`/post_office_edit/${row.id}`}
+        to={`/user_edit/${row.id}`}
         id={`edit-${row.id}`}
       >
         <Edit size={18} className={`text-info me-50`} />

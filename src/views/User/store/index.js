@@ -25,7 +25,7 @@ export const addData = createAsyncThunk(
 );
 
 export const getData = createAsyncThunk("users/getData", async (id) => {
-  const response = await Api.get(`post-office/${id}`);
+  const response = await Api.get(`user/${id}`);
   return response.data;
 });
 

@@ -1,47 +1,47 @@
+import { baseUrl } from "@src/config";
 import axios from "axios";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 let Api = axios.create({
-  // baseURL: 'http://api.letter.imrul.xyz/api/admin',
-  baseURL: 'http://letter.test/api/admin',
+  baseURL: baseUrl,
 
   headers: {
     // "Content-type": "application/json",
-    'Content-Type': 'multipart/form-data',
+    "Content-Type": "multipart/form-data",
     accept: "application/json",
   },
   transformResponse: (data) => {
-    let response = JSON.parse(data);  
+    let response = JSON.parse(data);
     if (response?.status == 201) {
-      const MySwal = withReactContent(Swal)
+      const MySwal = withReactContent(Swal);
       MySwal.fire({
-        position: 'top-end',
-        icon: 'success',
+        position: "top-end",
+        icon: "success",
         title: response?.message,
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
     }
     if (response?.status == 203) {
-      const MySwal = withReactContent(Swal)
+      const MySwal = withReactContent(Swal);
       MySwal.fire({
-        position: 'top-end',
-        icon: 'error',
+        position: "top-end",
+        icon: "error",
         title: response?.message,
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
     }
     return response;
   },
 
   validateStatus: function (status) {
     if (status === 401) {
-      localStorage.removeItem("user");
+      localStorage.clear();
       window.location.href = "/";
     }
-    
+
     if (status === 422) {
       return status;
     }
@@ -52,7 +52,8 @@ let Api = axios.create({
 
 Api.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${
-    localStorage.getItem("accessToken") && JSON.parse(localStorage.getItem("accessToken"))
+    localStorage.getItem("accessToken") &&
+    JSON.parse(localStorage.getItem("accessToken"))
   }`;
   return config;
 });

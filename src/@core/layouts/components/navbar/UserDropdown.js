@@ -44,8 +44,8 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name fw-bold">{userData?.name}</span>
-          <span className="user-status">{userData?.role}</span>
+          <span className="user-name fw-bold">{userData?.username}</span>
+          <span className="user-status">{userData?.user_type}</span>
         </div>
         <Avatar
           img={defaultAvatar}

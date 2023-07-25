@@ -34,7 +34,7 @@ const renderAction = (row) => {
       </Link>
       {/* <Link
         className="text-truncate text-capitalize align-middle"
-        to={`/post_office_edit/${row.id}`}
+        to={`/head_post_office_edit/${row.id}`}
         id={`edit-${row.id}`}
       >
         <Edit size={18} className={`text-info me-50`} />
@@ -73,33 +73,21 @@ export const columns = [
     ),
   },
   {
-    name: "Head PO",
-    sortable: true,
-    minWidth: "180px",
-    sortField: "head",
-    selector: (row) => row.head,
-    cell: (row) => (
-      <span className="fw-bolder">
-        {row?.head_post_office?.name}
-      </span>
-    ),
-  },
-  {
     name: "Zone",
     sortable: true,
-    minWidth: "180px",
-    sortField: "head",
-    selector: (row) => row.head,
+    minWidth: "120px",
+    sortField: "name",
+    selector: (row) => row.name,
     cell: (row) => (
       <span className="fw-bolder">
-        {row?.head_post_office?.zone?.name}
+        {row?.zone?.name}
       </span>
     ),
   },
   {
     name: "Address",
     sortable: true,
-    minWidth: "220px",
+    minWidth: "180px",
     sortField: "email",
     selector: (row) => row.phone,
     cell: (row) => <span className="text-capitalize">{row?.address}</span>,

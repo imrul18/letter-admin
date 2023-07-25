@@ -1,8 +1,6 @@
-import "@styles/react/libs/react-select/_react-select.scss";
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Select from "react-select";
 import {
   Button,
   Card,
@@ -16,33 +14,23 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import { addData, getHeadPostOfficeOption, getZoneOption, setUploadData } from "../store";
+import { addData, setUploadData } from "../store";
 
 const index = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { uploadData, paramsData, options } = useSelector((state) => state.postOffices);
-
-  useEffect(() => {
-    dispatch(getZoneOption());
-  }, []);
-
-  useEffect(() => {
-    if(uploadData?.zone_id){
-      dispatch(getHeadPostOfficeOption());
-    }
-  }, [uploadData?.zone_id]);
+  const { uploadData, paramsData } = useSelector((state) => state.headPostOffices);
 
   const onChange = (e) => {
     dispatch(
-      setUploadData({ ...uploadData, [e?.target?.name]: e.target?.value })
+      setUploadData({[e?.target?.name]: e.target?.value })
     );
   };
 
   const onSubmit = async () => {
     const res = await dispatch(addData());
     if (res?.payload) {
-      navigate("/post_office");
+      navigate("/zone");
     }
   };
 
@@ -53,7 +41,7 @@ const index = () => {
           <Form>
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">New Post Office</CardTitle>
+                <CardTitle tag="h4">New Zone</CardTitle>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -81,52 +69,6 @@ const index = () => {
                       placeholder="Code"
                       value={uploadData?.code}
                       onChange={onChange}
-                    />
-                  </Col>
-                  <Col sm="12">
-                    <Label className="form-label" for="zone_id">
-                      Zone
-                    </Label>
-                    <Select
-                      className="react-select"
-                      classNamePrefix="select"
-                      name="zone_id"
-                      id="zone_id"
-                      options={options?.zones}
-                      value={options?.zones?.find(
-                        (obj) => obj?.value === uploadData?.zone_id
-                      )}
-                      onChange={(e) => {
-                        onChange({
-                          target: {
-                            name: "zone_id",
-                            value: e?.value,
-                          },
-                        });
-                      }}
-                    />
-                  </Col>
-                  <Col sm="12">
-                    <Label className="form-label" for="head_post_office_id">
-                      Head Post Office
-                    </Label>
-                    <Select
-                      className="react-select"
-                      classNamePrefix="select"
-                      name="head_post_office_id"
-                      id="head_post_office_id"
-                      options={options?.headPostOffices}
-                      value={options?.headPostOffices?.find(
-                        (obj) => obj?.value === uploadData?.head_po_id
-                      )}
-                      onChange={(e) => {
-                        onChange({
-                          target: {
-                            name: "head_po_id",
-                            value: e?.value,
-                          },
-                        });
-                      }}
                     />
                   </Col>
                   <Col sm="12">
@@ -158,12 +100,12 @@ const index = () => {
                       >
                         {paramsData?.loading ? (
                           <>
-                            <Spinner className="me-25" size="sm" />
-                            Please Wait...
-                          </>
+                          <Spinner className="me-25" size="sm" />
+                          Please Wait...
+                        </>
                         ) : (
                           "Submit"
-                        )}
+                        )}                        
                       </Button>
                     </div>
                   </Col>

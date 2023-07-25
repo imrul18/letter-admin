@@ -3,7 +3,7 @@ import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Fragment, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { DebounceInput } from "react-debounce-input";
-import { ChevronDown, UserPlus } from "react-feather";
+import { ChevronDown, PlusCircle } from "react-feather";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import { columns } from "./columns";
 const index = () => {
   const dispatch = useDispatch();
   const { data, params, paramsData } = useSelector(
-    (state) => state.users
+    (state) => state.zones
   );
 
   useEffect(() => {
@@ -26,12 +26,12 @@ const index = () => {
     return (
       <div className="invoice-list-table-header w-100 me-1 ms-50 mt-2 mb-75">
         <Row>
-          <Col xl="3"></Col>
+          <Col xl="2"></Col>
           <Col
-            xl="3"
+            xl="4"
             className="d-flex align-items-end align-content-center flex-wrap"
           >
-            <div>Search by Name/PO code</div>
+            <div>Search by Zone code/name</div>
           </Col>
           <Col
             xl="3"
@@ -62,10 +62,10 @@ const index = () => {
                 color="primary"
                 onClick={(e) => {
                   e.preventDefault();
-                  navigate("/user_add");
+                  navigate("/zone_add");
                 }}
               >
-                <UserPlus size={14} /> Account
+                <PlusCircle size={14} /> New Zone
               </Button>
             </div>
           </Col>

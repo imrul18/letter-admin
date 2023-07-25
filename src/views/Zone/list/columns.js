@@ -29,17 +29,17 @@ const renderAction = (row) => {
           />
         )}
         <UncontrolledTooltip placement="top" target={`status-${row.id}`}>
-          {row?.status ? "Deactive Post Office" : "Active Post Office"}
+          {row?.status ? "Deactive Zone" : "Active Zone"}
         </UncontrolledTooltip>
       </Link>
       {/* <Link
         className="text-truncate text-capitalize align-middle"
-        to={`/post_office_edit/${row.id}`}
+        to={`/head_post_office_edit/${row.id}`}
         id={`edit-${row.id}`}
       >
         <Edit size={18} className={`text-info me-50`} />
         <UncontrolledTooltip placement="top" target={`edit-${row.id}`}>
-          {row?.status ? "Edit Post Office" : "Edit Post Office"}
+          {row?.status ? "Edit Zone" : "Edit Zone"}
         </UncontrolledTooltip>
       </Link>
       <Link
@@ -52,7 +52,7 @@ const renderAction = (row) => {
       >
         <Trash2 size={18} className={`text-info me-50`} />
         <UncontrolledTooltip placement="top" target={`delete-${row.id}`}>
-          {row?.status ? "Delete Post Office" : "Delete Post Office"}
+          {row?.status ? "Delete Zone" : "Delete Zone"}
         </UncontrolledTooltip>
       </Link> */}
     </div>
@@ -63,36 +63,12 @@ export const columns = [
   {
     name: "Code-Name",
     sortable: true,
-    minWidth: "250px",
+    minWidth: "220px",
     sortField: "name",
     selector: (row) => row.name,
     cell: (row) => (
       <span className="fw-bolder">
         {row?.code}-{row?.name}
-      </span>
-    ),
-  },
-  {
-    name: "Head PO",
-    sortable: true,
-    minWidth: "180px",
-    sortField: "head",
-    selector: (row) => row.head,
-    cell: (row) => (
-      <span className="fw-bolder">
-        {row?.head_post_office?.name}
-      </span>
-    ),
-  },
-  {
-    name: "Zone",
-    sortable: true,
-    minWidth: "180px",
-    sortField: "head",
-    selector: (row) => row.head,
-    cell: (row) => (
-      <span className="fw-bolder">
-        {row?.head_post_office?.zone?.name}
       </span>
     ),
   },
@@ -107,7 +83,7 @@ export const columns = [
   {
     name: "Status",
     sortable: true,
-    minWidth: "100px",
+    minWidth: "220px",
     sortField: "role",
     selector: (row) => row.phone,
     cell: (row) => (

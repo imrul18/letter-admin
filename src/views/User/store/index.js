@@ -18,6 +18,8 @@ export const addData = createAsyncThunk(
     const data = getState()?.users?.uploadData;
     const response = await Api.post("user", data);
     if (response?.data?.status === 200 || response?.data?.status === 201) {
+      dispatch(setUploadData({ type: "2" }));
+      dispatch(setParamsData({ loading: false }));
       return true;
     }
     dispatch(setParamsData({ loading: false }));
@@ -60,10 +62,37 @@ export const deleteData = createAsyncThunk(
   }
 );
 
+export const getZoneOption = createAsyncThunk(
+  "users/getZoneOption",
+  async () => {
+    const response = await Api.get(`option-zone`);
+    return response.data;
+  }
+);
+
+export const getHeadPostOfficeOption = createAsyncThunk(
+  "users/getHeadPostOfficeOption",
+  async (_, { getState }) => {
+    const id = getState()?.users?.uploadData?.zone_id;
+    const response = await Api.get(`option-head-post-office/${id}`);
+    return response.data;
+  }
+);
+
 export const getPostOfficeOption = createAsyncThunk(
   "users/getPostOfficeOption",
-  async () => {
-    const response = await Api.get(`option-post-office`);
+  async (_, { getState }) => {
+    const id = getState()?.users?.uploadData?.head_id;
+    const response = await Api.get(`option-post-office/${id}`);
+    return response.data;
+  }
+);
+
+export const getUserName = createAsyncThunk(
+  "users/getUserName",
+  async (_, { getState }) => {
+    const data = getState()?.users?.uploadData;
+    const response = await Api.post(`get-username`, data);
     return response.data;
   }
 );
@@ -78,19 +107,20 @@ export const usersSlice = createSlice({
     },
     paramsData: {
       total: 1,
-      loading: false
+      loading: false,
     },
 
-    uploadData: {},
-    options:{
-      postOffice: [
-        { value: "1", label: "Post Office 1" },
+    uploadData: { type: "2" },
+    options: {
+      zone: [],
+      headPostOffice: [],
+      postOffice: [],
+      type: [
+        { value: "2", label: "Counter" },
+        { value: "3", label: "Manager" },
+        { value: "4", label: "Post Man" },
       ],
-      role: [
-        { value: "user", label: "User" },
-        { value: "delivery", label: "Post Man"}
-      ],
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -105,8 +135,17 @@ export const usersSlice = createSlice({
       .addCase(getData.fulfilled, (state, action) => {
         state.uploadData = action.payload;
       })
+      .addCase(getZoneOption.fulfilled, (state, action) => {
+        state.options = { ...state.options, zone: action.payload };
+      })
+      .addCase(getHeadPostOfficeOption.fulfilled, (state, action) => {
+        state.options = { ...state.options, headPostOffice: action.payload };
+      })
       .addCase(getPostOfficeOption.fulfilled, (state, action) => {
-        state.options = {...state.options, postOffice: action.payload}
+        state.options = { ...state.options, postOffice: action.payload };
+      })
+      .addCase(getUserName.fulfilled, (state, action) => {
+        state.uploadData = { ...state.uploadData, username: action.payload };
       });
   },
   reducers: {
@@ -117,12 +156,11 @@ export const usersSlice = createSlice({
       state.paramsData = { ...state.paramsData, ...action.payload };
     },
     setUploadData: (state, action) => {
-      state.uploadData = { ...state.uploadData, ...action.payload };
+      state.uploadData = action.payload;
     },
   },
 });
 
-export const { setParams, setParamsData, setUploadData } =
-  usersSlice.actions;
+export const { setParams, setParamsData, setUploadData } = usersSlice.actions;
 
 export default usersSlice.reducer;

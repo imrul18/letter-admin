@@ -1,8 +1,6 @@
-import "@styles/react/libs/react-select/_react-select.scss";
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Select from "react-select";
 import {
   Button,
   Card,
@@ -16,17 +14,16 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import { getData, getPostOfficeOption, setUploadData, updateData } from "../store";
+import { getData, setUploadData, updateData } from "../store";
 
 const index = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
-  const { uploadData, paramsData, options } = useSelector((state) => state.users);
+  const {id} = useParams();
+  const { uploadData, paramsData } = useSelector((state) => state.headPostOffices);
 
   useEffect(() => {
     dispatch(getData(id));
-    dispatch(getPostOfficeOption());
   }, []);
 
   const onChange = (e) => {
@@ -38,7 +35,7 @@ const index = () => {
   const onSubmit = async () => {
     const res = await dispatch(updateData(id));
     if (res?.payload) {
-      navigate("/user");
+      navigate("/head_post_office");
     }
   };
 
@@ -49,7 +46,7 @@ const index = () => {
           <Form>
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">New Post Office</CardTitle>
+                <CardTitle tag="h4">Edit Head Post Office</CardTitle>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -67,58 +64,29 @@ const index = () => {
                     />
                   </Col>
                   <Col sm="12">
-                    <Label className="form-label" for="username">
-                      Username
+                    <Label className="form-label" for="code">
+                      Code
                     </Label>
                     <Input
                       type="text"
-                      name="username"
-                      id="username"
-                      placeholder="username"
-                      value={uploadData?.username}
+                      name="code"
+                      id="code"
+                      placeholder="Code"
+                      value={uploadData?.code}
                       onChange={onChange}
                     />
                   </Col>
                   <Col sm="12">
-                    <Label className="form-label" for="po_id">
-                      Post Office
+                    <Label className="form-label" for="address">
+                    Address
                     </Label>
-                    <Select
-                      className="React"
-                      classNamePrefix="select"
-                      options={options?.postOffice}
-                      value={options?.postOffice?.find(
-                        (obj) => obj?.value == uploadData?.po_id
-                      )}
-                      onChange={(e) => {
-                        onChange({
-                          target: {
-                            name: "po_id",
-                            value: e?.value,
-                          },
-                        });
-                      }}
-                    />
-                  </Col>
-                  <Col sm="12">
-                    <Label className="form-label" for="type">
-                      Role
-                    </Label>
-                    <Select
-                      className="React"
-                      classNamePrefix="select"
-                      options={options?.role}
-                      value={options?.role?.find(
-                        (obj) => obj?.value === uploadData?.type
-                      )}
-                      onChange={(e) => {
-                        onChange({
-                          target: {
-                            name: "type",
-                            value: e?.value,
-                          },
-                        });
-                      }}
+                    <Input
+                      type="textarea"
+                      name="address"
+                      id="address"
+                      placeholder="Address"
+                      value={uploadData?.address}
+                      onChange={onChange}
                     />
                   </Col>
                 </Row>
@@ -134,15 +102,15 @@ const index = () => {
                           onSubmit();
                         }}
                         disabled={paramsData?.loading}
-                      >
-                        {paramsData?.loading ? (
-                          <>
+                        >
+                          {paramsData?.loading ? (
+                            <>
                             <Spinner className="me-25" size="sm" />
                             Please Wait...
                           </>
-                        ) : (
-                          "Submit"
-                        )}
+                          ) : (
+                            "Submit"
+                          )}    
                       </Button>
                     </div>
                   </Col>

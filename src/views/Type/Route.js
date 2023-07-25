@@ -8,15 +8,15 @@ const Add = lazy(() => import('./add'))
 const Route = [  
   {
     element: <List />,
-    path: '/post_office'
+    path: '/type'
   },
   {
     element: <Add />,
-    path: '/post_office_add'
+    path: '/type_add'
   },
   // {
   //   element: <Edit />,
-  //   path: '/post_office_edit/:id'
+  //   path: '/type_edit/:id'
   // }
 ]
 

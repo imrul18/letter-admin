@@ -16,23 +16,58 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import { addData, getPostOfficeOption, setUploadData } from "../store";
+import {
+  addData,
+  getHeadPostOfficeOption,
+  getPostOfficeOption,
+  getUserName,
+  getZoneOption,
+  setUploadData,
+} from "../store";
 
 const index = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { uploadData, paramsData, options } = useSelector(
     (state) => state.users
-  );
+    );
 
   useEffect(() => {
-    dispatch(getPostOfficeOption());
+    dispatch(getZoneOption());
   }, []);
 
+  useEffect(() => {
+    onChange({ target: { name: "head_id", value: null } });
+    if (uploadData?.zone_id) {
+      dispatch(getHeadPostOfficeOption());
+    }
+  }, [uploadData?.zone_id]);
+
+  useEffect(() => {
+    onChange({ target: { name: "po_id", value: null } });
+    if (uploadData?.head_id) {
+      dispatch(getPostOfficeOption());
+    }
+  }, [uploadData?.head_id]);
+
+  useEffect(() => {
+    if (
+      uploadData?.zone_id &&
+      uploadData?.head_id &&
+      uploadData?.po_id &&
+      uploadData?.type
+    ) {
+      dispatch(getUserName());
+    }
+  }, [
+    uploadData?.zone_id,
+    uploadData?.head_id,
+    uploadData?.po_id,
+    uploadData?.type,
+  ]);
+
   const onChange = (e) => {
-    dispatch(
-      setUploadData({ ...uploadData, [e?.target?.name]: e.target?.value })
-    );
+    dispatch(setUploadData({ ...uploadData, [e?.target?.name]: e.target?.value }));
   };
 
   const onSubmit = async () => {
@@ -49,34 +84,66 @@ const index = () => {
           <Form>
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">New Post Office</CardTitle>
+                <CardTitle tag="h4">New Account</CardTitle>
               </CardHeader>
               <CardBody>
                 <Row>
                   <Col sm="12">
-                    <Label className="form-label" for="name">
-                      Name
+                    <Label className="form-label" for="username">
+                      User Name
                     </Label>
                     <Input
                       type="text"
-                      name="name"
-                      id="name"
-                      placeholder="Name"
-                      value={uploadData?.name}
+                      name="username"
+                      id="username"
+                      placeholder="User Name"
+                      value={uploadData?.username}
                       onChange={onChange}
+                      disabled
                     />
                   </Col>
                   <Col sm="12">
-                    <Label className="form-label" for="phone">
-                      Phone
+                    <Label className="form-label" for="zone_id">
+                      Zone
                     </Label>
-                    <Input
-                      type="text"
-                      name="phone"
-                      id="phone"
-                      placeholder="Phone"
-                      value={uploadData?.phone}
-                      onChange={onChange}
+                    <Select
+                      className="react-select"
+                      classNamePrefix="select"
+                      placeholder="Select Zone"
+                      options={options?.zone}
+                      value={options?.zone?.find(
+                        (obj) => obj?.value === uploadData?.zone_id
+                      )}
+                      onChange={(e) => {
+                        onChange({
+                          target: {
+                            name: "zone_id",
+                            value: e?.value,
+                          },
+                        });
+                      }}
+                    />
+                  </Col>
+                  <Col sm="12">
+                    <Label className="form-label" for="head_id">
+                      Head Post Office
+                    </Label>
+                    <Select
+                      className="react-select"
+                      classNamePrefix="select"
+                      placeholder="Select Head Post Office"
+                      options={options?.headPostOffice}
+                      value={options?.headPostOffice?.find(
+                        (obj) => obj?.value === uploadData?.head_id
+                      )}
+                      onChange={(e) => {
+                        onChange({
+                          target: {
+                            name: "head_id",
+                            value: e?.value,
+                          },
+                        });
+                      }}
                     />
                   </Col>
                   <Col sm="12">
@@ -84,8 +151,9 @@ const index = () => {
                       Post Office
                     </Label>
                     <Select
-                      className="React"
+                      className="react-select"
                       classNamePrefix="select"
+                      placeholder="Select Post Office"
                       options={options?.postOffice}
                       value={options?.postOffice?.find(
                         (obj) => obj?.value === uploadData?.po_id
@@ -102,13 +170,13 @@ const index = () => {
                   </Col>
                   <Col sm="12">
                     <Label className="form-label" for="type">
-                      Role
+                      Type
                     </Label>
                     <Select
-                      className="React"
+                      className="react-select"
                       classNamePrefix="select"
-                      options={options?.role}
-                      value={options?.role?.find(
+                      options={options?.type}
+                      value={options?.type?.find(
                         (obj) => obj?.value === uploadData?.type
                       )}
                       onChange={(e) => {
@@ -119,6 +187,19 @@ const index = () => {
                           },
                         });
                       }}
+                    />
+                  </Col>
+                  <Col sm="12">
+                    <Label className="form-label" for="password">
+                      Password
+                    </Label>
+                    <Input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Password"
+                      value={uploadData?.password}
+                      onChange={onChange}
                     />
                   </Col>
                 </Row>

@@ -1,8 +1,8 @@
-import { Edit, Moon, Sun, Trash2 } from "react-feather";
+import { Moon, Sun } from "react-feather";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { UncontrolledTooltip } from "reactstrap";
-import { deleteData, updateStatus } from "../store";
+import { updateStatus } from "../store";
 
 const renderAction = (row) => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const renderAction = (row) => {
           {row?.status ? "Deactive User" : "Active User"}
         </UncontrolledTooltip>
       </Link>
-      <Link
+      {/* <Link
         className="text-truncate text-capitalize align-middle"
         to={`/user_edit/${row.id}`}
         id={`edit-${row.id}`}
@@ -54,52 +54,54 @@ const renderAction = (row) => {
         <UncontrolledTooltip placement="top" target={`delete-${row.id}`}>
           {row?.status ? "Delete User" : "Delete User"}
         </UncontrolledTooltip>
-      </Link>
+      </Link> */}
     </div>
   );
 };
 
 export const columns = [
   {
-    name: "Name",
-    sortable: true,
+    name: "Username",
     minWidth: "220px",
-    sortField: "name",
-    selector: (row) => row.name,
-    cell: (row) => (
-      <span className="fw-bolder">
-        {row?.name}
-      </span>
-    ),
+    sortField: "username",
+    selector: (row) => row.username,
+    cell: (row) => <span>{row?.username}</span>,
   },
   {
-    name: "Phone",
-    minWidth: "120px",
-    sortField: "phone",
-    selector: (row) => row.phone,
-    cell: (row) => <span className="text-capitalize">{row?.phone}</span>,
-  },
-
-  {
-    name: "Role",
+    name: "Type",
     minWidth: "120px",
     sortField: "type",
     selector: (row) => row.type,
-    cell: (row) => <span className="text-capitalize">{row?.type == 'user' ? 'User' : row?.type == 'delivery' ? 'Post Man' : 'Admin' }</span>,
+    cell: (row) => <span className="text-capitalize">{row?.user_type}</span>,
   },
-
+  {
+    name: "Zone",
+    minWidth: "120px",
+    sortField: "zone",
+    selector: (row) => row.post_office,
+    cell: (row) => (
+      <span>{row?.post_office?.head_post_office?.zone?.name}</span>
+    ),
+  },
+  {
+    name: "Head Post Office",
+    minWidth: "120px",
+    sortField: "head_post_office",
+    selector: (row) => row.post_office?.head_post_office,
+    cell: (row) => <span>{row?.post_office?.head_post_office?.name}</span>,
+  },
   {
     name: "Post Office",
-    minWidth: "220px",
-    sortField: "phone",
+    minWidth: "120px",
+    sortField: "post_office",
     selector: (row) => row.post_office,
-    cell: (row) => <span >{row?.post_office?.code}-{row?.post_office?.name}</span>,
+    cell: (row) => <span>{row?.post_office?.name}</span>,
   },
   {
     name: "Status",
     sortable: true,
     minWidth: "120px",
-    sortField: "role",
+    sortField: "status",
     selector: (row) => row.status,
     cell: (row) => (
       <span className="text-capitalize">

@@ -75,18 +75,18 @@ const Login = () => {
             </CardText>
             <Form className="auth-login-form mt-2">
               <div className="mb-1">
-                <Label className="form-label" for="phone">
-                  Phone number
+                <Label className="form-label" for="username">
+                  Username
                 </Label>
                 <Input
                   type="text"
-                  id="phone"
-                  name="phone"
+                  id="username"
+                  name="username"
                   placeholder="016XXXXXXXX"
                   autoFocus
                   onChange={onChange}
                 />
-                    <small className="text-danger">{errors?.phone}</small>
+                    <small className="text-danger">{errors?.username}</small>
 
               </div>
               <div className="mb-1">
